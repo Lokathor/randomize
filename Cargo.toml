@@ -1,0 +1,10 @@
+[package]
+name = "randomize"
+version = "4.0.0-alpha.4"
+authors = ["Lokathor <zefria@gmail.com>"]
+edition = "2018"
+license = "Zlib OR Apache-2.0 OR MIT"
+
+[features]
+default = ["os_random"]
+os_random = []
