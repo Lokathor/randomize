@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A Generator with 32 bits of output per step."><meta name="keywords" content="rust, rustlang, rust-lang, Gen32"><title>randomize::Gen32 - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc trait"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../randomize/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Trait Gen32</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.next_u32">next_u32</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.dice">dice</a><a href="#method.next_bool">next_bool</a><a href="#method.next_u8">next_u8</a><a href="#method.next_u16">next_u16</a><a href="#method.next_u64">next_u64</a><a href="#method.next_f32_unit">next_f32_unit</a><a href="#method.next_f32_signed_unit">next_f32_signed_unit</a><a href="#method.next_bounded">next_bounded</a><a href="#method.step_ed4">step_ed4</a><a href="#method.sundown_pool">sundown_pool</a><a href="#method.rn_bounded_luck">rn_bounded_luck</a><a href="#method.rn_exponential_decay">rn_exponential_decay</a><a href="#method.rn_z">rn_z</a><a href="#method.pick">pick</a><a href="#method.pick_ref">pick_ref</a><a href="#method.pick_mut">pick_mut</a><a href="#method.shuffle">shuffle</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class="location"><a href="index.html">randomize</a></p><div id="sidebar-vars" data-name="Gen32" data-ty="trait" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Trait <a href="index.html">randomize</a>::<wbr><a class="trait" href="">Gen32</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/randomize/gen32.rs.html#4-276" title="goto source code">[src]</a></span></h1><div class="docblock type-decl hidden-by-usual-hider"><pre class="rust trait">pub trait Gen32 {
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc trait"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../randomize/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Trait Gen32</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.next_u32">next_u32</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.next_bool">next_bool</a><a href="#method.next_u8">next_u8</a><a href="#method.next_u16">next_u16</a><a href="#method.next_u64">next_u64</a><a href="#method.next_f32_unit">next_f32_unit</a><a href="#method.next_f32_signed_unit">next_f32_signed_unit</a><a href="#method.next_f64_unit">next_f64_unit</a><a href="#method.next_f64_signed_unit">next_f64_signed_unit</a><a href="#method.next_bounded">next_bounded</a><a href="#method.pick">pick</a><a href="#method.pick_ref">pick_ref</a><a href="#method.pick_mut">pick_mut</a><a href="#method.shuffle">shuffle</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class="location"><a href="index.html">randomize</a></p><div id="sidebar-vars" data-name="Gen32" data-ty="trait" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Trait <a href="index.html">randomize</a>::<wbr><a class="trait" href="">Gen32</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/randomize/gen32.rs.html#4-149" title="goto source code">[src]</a></span></h1><div class="docblock type-decl hidden-by-usual-hider"><pre class="rust trait">pub trait Gen32 {
     fn <a href="#tymethod.next_u32" class="fnname">next_u32</a>(&amp;mut self) -&gt; u32;
 
     fn <a href="#method.next_bool" class="fnname">next_bool</a>(&amp;mut self) -&gt; bool { ... }
@@ -10,13 +10,9 @@
 <div class="item-spacer"></div>    fn <a href="#method.next_u64" class="fnname">next_u64</a>(&amp;mut self) -&gt; u64 { ... }
 <div class="item-spacer"></div>    fn <a href="#method.next_f32_unit" class="fnname">next_f32_unit</a>(&amp;mut self) -&gt; f32 { ... }
 <div class="item-spacer"></div>    fn <a href="#method.next_f32_signed_unit" class="fnname">next_f32_signed_unit</a>(&amp;mut self) -&gt; f32 { ... }
+<div class="item-spacer"></div>    fn <a href="#method.next_f64_unit" class="fnname">next_f64_unit</a>(&amp;mut self) -&gt; f64 { ... }
+<div class="item-spacer"></div>    fn <a href="#method.next_f64_signed_unit" class="fnname">next_f64_signed_unit</a>(&amp;mut self) -&gt; f64 { ... }
 <div class="item-spacer"></div>    fn <a href="#method.next_bounded" class="fnname">next_bounded</a>(&amp;mut self, b: u32) -&gt; u32 { ... }
-<div class="item-spacer"></div>    fn <a href="#method.dice" class="fnname">dice</a>(&amp;mut self, count: i32, sides: i32) -&gt; i32 { ... }
-<div class="item-spacer"></div>    fn <a href="#method.step_ed4" class="fnname">step_ed4</a>(&amp;mut self, step: i32) -&gt; i32 { ... }
-<div class="item-spacer"></div>    fn <a href="#method.sundown_pool" class="fnname">sundown_pool</a>(&amp;mut self, size: u32) -&gt; u32 { ... }
-<div class="item-spacer"></div>    fn <a href="#method.rn_bounded_luck" class="fnname">rn_bounded_luck</a>(&amp;mut self, x: i32, luck: i32) -&gt; i32 { ... }
-<div class="item-spacer"></div>    fn <a href="#method.rn_exponential_decay" class="fnname">rn_exponential_decay</a>(&amp;mut self, x: i32) -&gt; i32 { ... }
-<div class="item-spacer"></div>    fn <a href="#method.rn_z" class="fnname">rn_z</a>(&amp;mut self, i: i32) -&gt; i32 { ... }
 <div class="item-spacer"></div>    fn <a href="#method.pick" class="fnname">pick</a>&lt;T&gt;(&amp;mut self, buf: &amp;[T]) -&gt; T<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a></span>,
     { ... }
 <div class="item-spacer"></div>    fn <a href="#method.pick_ref" class="fnname">pick_ref</a>&lt;'b, T&gt;(&amp;mut self, buf: &amp;'b [T]) -&gt; &amp;'b T<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>,
@@ -31,82 +27,35 @@
 </div><h3 id="method.next_u8" class="method"><code>fn <a href="#method.next_u8" class="fnname">next_u8</a>(&amp;mut self) -&gt; u8</code><a class="srclink" href="../src/randomize/gen32.rs.html#16-18" title="goto source code">[src]</a></h3><div class="docblock"><p>Produce a <code>u8</code></p>
 </div><h3 id="method.next_u16" class="method"><code>fn <a href="#method.next_u16" class="fnname">next_u16</a>(&amp;mut self) -&gt; u16</code><a class="srclink" href="../src/randomize/gen32.rs.html#22-24" title="goto source code">[src]</a></h3><div class="docblock"><p>Produce a <code>u16</code></p>
 </div><h3 id="method.next_u64" class="method"><code>fn <a href="#method.next_u64" class="fnname">next_u64</a>(&amp;mut self) -&gt; u64</code><a class="srclink" href="../src/randomize/gen32.rs.html#28-32" title="goto source code">[src]</a></h3><div class="docblock"><p>Produce a <code>u64</code></p>
-</div><h3 id="method.next_f32_unit" class="method"><code>fn <a href="#method.next_f32_unit" class="fnname">next_f32_unit</a>(&amp;mut self) -&gt; f32</code><a class="srclink" href="../src/randomize/gen32.rs.html#36-38" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns an <code>f32</code> in the unsigned unit range, <code>[0, 1]</code></p>
-</div><h3 id="method.next_f32_signed_unit" class="method"><code>fn <a href="#method.next_f32_signed_unit" class="fnname">next_f32_signed_unit</a>(&amp;mut self) -&gt; f32</code><a class="srclink" href="../src/randomize/gen32.rs.html#42-44" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns an <code>f32</code> in the signed unit range, <code>[-1, 1]</code></p>
-</div><h3 id="method.next_bounded" class="method"><code>fn <a href="#method.next_bounded" class="fnname">next_bounded</a>(&amp;mut self, b: u32) -&gt; u32</code><a class="srclink" href="../src/randomize/gen32.rs.html#54-69" title="goto source code">[src]</a></h3><div class="docblock"><p>Gives a value within <code>0 .. B</code></p>
-<p>This is often more efficient than making a [<code>BoundedRandU32</code>] if you don’t
-need to use a specific bound value more than once.</p>
+</div><h3 id="method.next_f32_unit" class="method"><code>fn <a href="#method.next_f32_unit" class="fnname">next_f32_unit</a>(&amp;mut self) -&gt; f32</code><a class="srclink" href="../src/randomize/gen32.rs.html#39-41" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns an <code>f32</code> in the unsigned unit range, <code>[0, 1]</code></p>
+<p>If you’d like <code>[0, 1)</code> then just use this and reroll in the (very
+unlikely) case that you do get 1.0</p>
+</div><h3 id="method.next_f32_signed_unit" class="method"><code>fn <a href="#method.next_f32_signed_unit" class="fnname">next_f32_signed_unit</a>(&amp;mut self) -&gt; f32</code><a class="srclink" href="../src/randomize/gen32.rs.html#45-47" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns an <code>f32</code> in the signed unit range, <code>[-1, 1]</code></p>
+</div><h3 id="method.next_f64_unit" class="method"><code>fn <a href="#method.next_f64_unit" class="fnname">next_f64_unit</a>(&amp;mut self) -&gt; f64</code><a class="srclink" href="../src/randomize/gen32.rs.html#54-56" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns an <code>f64</code> in the unsigned unit range, <code>[0, 1]</code></p>
+<p>If you’d like <code>[0, 1)</code> then just use this and reroll in the (very
+unlikely) case that you do get 1.0</p>
+</div><h3 id="method.next_f64_signed_unit" class="method"><code>fn <a href="#method.next_f64_signed_unit" class="fnname">next_f64_signed_unit</a>(&amp;mut self) -&gt; f64</code><a class="srclink" href="../src/randomize/gen32.rs.html#60-62" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns an <code>f64</code> in the signed unit range, <code>[-1, 1]</code></p>
+</div><h3 id="method.next_bounded" class="method"><code>fn <a href="#method.next_bounded" class="fnname">next_bounded</a>(&amp;mut self, b: u32) -&gt; u32</code><a class="srclink" href="../src/randomize/gen32.rs.html#73-88" title="goto source code">[src]</a></h3><div class="docblock"><p>Gives a value within <code>0 .. B</code></p>
+<p>This is often more efficient than making a
+<a href="../randomize/struct.BoundedRandU32.html"><code>BoundedRandU32</code></a> if you don’t need to use a
+specific bound value more than once.</p>
 <h2 id="panics" class="section-header"><a href="#panics">Panics</a></h2>
 <ul>
 <li>If the input is 0.</li>
 </ul>
-</div><h3 id="method.dice" class="method"><code>fn <a href="#method.dice" class="fnname">dice</a>(&amp;mut self, count: i32, sides: i32) -&gt; i32</code><a class="srclink" href="../src/randomize/gen32.rs.html#77-98" title="goto source code">[src]</a></h3><div class="docblock"><p>Performs an <code>XdY</code> style dice roll.</p>
-<ul>
-<li>If <code>count</code> or <code>sides</code> are less than 0, the output is 0.</li>
-<li>Requires linear time to compute based on <code>count</code>. Expected inputs are 20
-or less.</li>
-</ul>
-</div><h3 id="method.step_ed4" class="method"><code>fn <a href="#method.step_ed4" class="fnname">step_ed4</a>(&amp;mut self, step: i32) -&gt; i32</code><a class="srclink" href="../src/randomize/gen32.rs.html#109-135" title="goto source code">[src]</a></h3><div class="docblock"><p>Performs a “step” roll according to the 4e chart.</p>
-<p>This relates to a particular paper and pencil RPG. If you’re not familiar
-with the game that’s fine.</p>
-<ul>
-<li>The average output of any positive value is approximately equal to the
-input, with no hard upper bound.</li>
-<li>The output of any non-positive value is 1.</li>
-<li>Requires linear time to compute. Expected inputs are 30 or less.</li>
-</ul>
-</div><h3 id="method.sundown_pool" class="method"><code>fn <a href="#method.sundown_pool" class="fnname">sundown_pool</a>(&amp;mut self, size: u32) -&gt; u32</code><a class="srclink" href="../src/randomize/gen32.rs.html#144-153" title="goto source code">[src]</a></h3><div class="docblock"><p>Rolls an After Sundown style dice pool.</p>
-<p>This relates to a particular paper and pencil RPG. If you’re not familiar
-with the game that’s fine.</p>
-<ul>
-<li><code>size</code> D6s are rolled. This returns the number of them that are a 5 or
-<ol start="6">
-<li></li>
-</ol>
-</li>
-</ul>
-</div><h3 id="method.rn_bounded_luck" class="method"><code>fn <a href="#method.rn_bounded_luck" class="fnname">rn_bounded_luck</a>(&amp;mut self, x: i32, luck: i32) -&gt; i32</code><a class="srclink" href="../src/randomize/gen32.rs.html#167-176" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns a value in <code>0..x</code> with the odds modified by <code>luck</code>.</p>
-<p>This pertains to a particular video game. If you’re not familiar with the
-game that’s fine.</p>
-<ul>
-<li>This is a constant time operation.</li>
-<li>higher luck pushes the output towards zero.</li>
-<li>lower luck pushes the output towards the upper value.</li>
-<li><code>luck</code> is expected to be +/-30</li>
-</ul>
-<h2 id="panics-1" class="section-header"><a href="#panics-1">Panics</a></h2>
-<ul>
-<li>If <code>x</code> is 0 or less.</li>
-</ul>
-</div><h3 id="method.rn_exponential_decay" class="method"><code>fn <a href="#method.rn_exponential_decay" class="fnname">rn_exponential_decay</a>(&amp;mut self, x: i32) -&gt; i32</code><a class="srclink" href="../src/randomize/gen32.rs.html#186-193" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns a value of 1 or more.</p>
-<ul>
-<li>The output starts at 1, then has a repeated <code>1/x</code> chance of getting +1.</li>
-<li>As soon as the value doesn’t get a +1, it is returned.</li>
-</ul>
-<h2 id="panics-2" class="section-header"><a href="#panics-2">Panics</a></h2>
-<ul>
-<li>If <code>x</code> is less than 2.</li>
-</ul>
-</div><h3 id="method.rn_z" class="method"><code>fn <a href="#method.rn_z" class="fnname">rn_z</a>(&amp;mut self, i: i32) -&gt; i32</code><a class="srclink" href="../src/randomize/gen32.rs.html#202-215" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns a value.</p>
-<p>This pertains to a particular video game. If you’re not familiar with the
-game that’s fine.</p>
-<ul>
-<li>The input value affects the output.</li>
-<li>This runs in constant time.</li>
-</ul>
-</div><h3 id="method.pick" class="method"><code>fn <a href="#method.pick" class="fnname">pick</a>&lt;T&gt;(&amp;mut self, buf: &amp;[T]) -&gt; T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a>,&nbsp;</span></code><a class="srclink" href="../src/randomize/gen32.rs.html#221-228" title="goto source code">[src]</a></h3><div class="docblock"><p>Gets a value out of the slice given (by copy).</p>
+</div><h3 id="method.pick" class="method"><code>fn <a href="#method.pick" class="fnname">pick</a>&lt;T&gt;(&amp;mut self, buf: &amp;[T]) -&gt; T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a>,&nbsp;</span></code><a class="srclink" href="../src/randomize/gen32.rs.html#94-101" title="goto source code">[src]</a></h3><div class="docblock"><p>Gets a value out of the slice given (by copy).</p>
 <ul>
 <li>The default impl will not pick past index <code>u32::MAX</code>.</li>
 </ul>
-</div><h3 id="method.pick_ref" class="method"><code>fn <a href="#method.pick_ref" class="fnname">pick_ref</a>&lt;'b, T&gt;(&amp;mut self, buf: &amp;'b [T]) -&gt; &amp;'b T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code><a class="srclink" href="../src/randomize/gen32.rs.html#234-240" title="goto source code">[src]</a></h3><div class="docblock"><p>Gets a value out of the slice given (by shared ref).</p>
+</div><h3 id="method.pick_ref" class="method"><code>fn <a href="#method.pick_ref" class="fnname">pick_ref</a>&lt;'b, T&gt;(&amp;mut self, buf: &amp;'b [T]) -&gt; &amp;'b T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code><a class="srclink" href="../src/randomize/gen32.rs.html#107-113" title="goto source code">[src]</a></h3><div class="docblock"><p>Gets a value out of the slice given (by shared ref).</p>
 <ul>
 <li>The default impl will not pick past index <code>u32::MAX</code>.</li>
 </ul>
-</div><h3 id="method.pick_mut" class="method"><code>fn <a href="#method.pick_mut" class="fnname">pick_mut</a>&lt;'b, T&gt;(&amp;mut self, buf: &amp;'b mut [T]) -&gt; &amp;'b mut T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code><a class="srclink" href="../src/randomize/gen32.rs.html#246-252" title="goto source code">[src]</a></h3><div class="docblock"><p>Gets a value out of the slice given (by unique ref).</p>
+</div><h3 id="method.pick_mut" class="method"><code>fn <a href="#method.pick_mut" class="fnname">pick_mut</a>&lt;'b, T&gt;(&amp;mut self, buf: &amp;'b mut [T]) -&gt; &amp;'b mut T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code><a class="srclink" href="../src/randomize/gen32.rs.html#119-125" title="goto source code">[src]</a></h3><div class="docblock"><p>Gets a value out of the slice given (by unique ref).</p>
 <ul>
 <li>The default impl will not pick past index <code>u32::MAX</code>.</li>
 </ul>
-</div><h3 id="method.shuffle" class="method"><code>fn <a href="#method.shuffle" class="fnname">shuffle</a>&lt;T&gt;(&amp;mut self, buf: &amp;mut [T]) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code><a class="srclink" href="../src/randomize/gen32.rs.html#258-275" title="goto source code">[src]</a></h3><div class="docblock"><p>Shuffles a slice in <code>O(len)</code> time.</p>
+</div><h3 id="method.shuffle" class="method"><code>fn <a href="#method.shuffle" class="fnname">shuffle</a>&lt;T&gt;(&amp;mut self, buf: &amp;mut [T]) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code><a class="srclink" href="../src/randomize/gen32.rs.html#131-148" title="goto source code">[src]</a></h3><div class="docblock"><p>Shuffles a slice in <code>O(len)</code> time.</p>
 <ul>
 <li>The default impl shuffles only the first <code>u32::MAX</code> elements.</li>
 </ul>

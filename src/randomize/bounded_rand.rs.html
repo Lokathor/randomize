@@ -72,6 +72,8 @@
 <span id="69">69</span>
 <span id="70">70</span>
 <span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
@@ -85,7 +87,9 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BoundedRandU32</span> {
   <span class="doccomment">/// number of possible outputs. outputs will be in `0 .. count`</span>
   <span class="ident">count</span>: <span class="ident">u32</span>,
-  <span class="doccomment">/// Multiplication threshold thing. https://arxiv.org/abs/1805.10941</span>
+  <span class="doccomment">/// Multiplication threshold thing.</span>
+  <span class="doccomment">///</span>
+  <span class="doccomment">/// &lt;https://arxiv.org/abs/1805.10941&gt;</span>
   <span class="ident">threshold</span>: <span class="ident">u32</span>,
 }
 <span class="kw">impl</span> <span class="ident">BoundedRandU32</span> {

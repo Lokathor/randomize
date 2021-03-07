@@ -174,112 +174,6 @@
 <span id="171">171</span>
 <span id="172">172</span>
 <span id="173">173</span>
-<span id="174">174</span>
-<span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
-<span id="199">199</span>
-<span id="200">200</span>
-<span id="201">201</span>
-<span id="202">202</span>
-<span id="203">203</span>
-<span id="204">204</span>
-<span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
-<span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
-<span id="238">238</span>
-<span id="239">239</span>
-<span id="240">240</span>
-<span id="241">241</span>
-<span id="242">242</span>
-<span id="243">243</span>
-<span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
-<span id="255">255</span>
-<span id="256">256</span>
-<span id="257">257</span>
-<span id="258">258</span>
-<span id="259">259</span>
-<span id="260">260</span>
-<span id="261">261</span>
-<span id="262">262</span>
-<span id="263">263</span>
-<span id="264">264</span>
-<span id="265">265</span>
-<span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
-<span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
-<span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
-<span id="279">279</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::{<span class="ident">TryFrom</span>, <span class="ident">TryInto</span>};
 
@@ -315,6 +209,9 @@
   }
 
   <span class="doccomment">/// Returns an `f32` in the unsigned unit range, `[0, 1]`</span>
+  <span class="doccomment">///</span>
+  <span class="doccomment">/// If you&#39;d like `[0, 1)` then just use this and reroll in the (very</span>
+  <span class="doccomment">/// unlikely) case that you do get 1.0</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="kw">fn</span> <span class="ident">next_f32_unit</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
     <span class="kw">crate</span>::<span class="ident">free_utils</span>::<span class="ident">ieee754_random_f32</span>(<span class="self">self</span>, <span class="bool-val">true</span>)
@@ -326,10 +223,26 @@
     <span class="kw">crate</span>::<span class="ident">free_utils</span>::<span class="ident">ieee754_random_f32</span>(<span class="self">self</span>, <span class="bool-val">false</span>)
   }
 
+  <span class="doccomment">/// Returns an `f64` in the unsigned unit range, `[0, 1]`</span>
+  <span class="doccomment">///</span>
+  <span class="doccomment">/// If you&#39;d like `[0, 1)` then just use this and reroll in the (very</span>
+  <span class="doccomment">/// unlikely) case that you do get 1.0</span>
+  <span class="attribute">#[<span class="ident">inline</span>]</span>
+  <span class="kw">fn</span> <span class="ident">next_f64_unit</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">crate</span>::<span class="ident">free_utils</span>::<span class="ident">ieee754_random_f64</span>(<span class="self">self</span>, <span class="bool-val">true</span>)
+  }
+
+  <span class="doccomment">/// Returns an `f64` in the signed unit range, `[-1, 1]`</span>
+  <span class="attribute">#[<span class="ident">inline</span>]</span>
+  <span class="kw">fn</span> <span class="ident">next_f64_signed_unit</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">crate</span>::<span class="ident">free_utils</span>::<span class="ident">ieee754_random_f64</span>(<span class="self">self</span>, <span class="bool-val">false</span>)
+  }
+
   <span class="doccomment">/// Gives a value within `0 .. B`</span>
   <span class="doccomment">///</span>
-  <span class="doccomment">/// This is often more efficient than making a [`BoundedRandU32`] if you don&#39;t</span>
-  <span class="doccomment">/// need to use a specific bound value more than once.</span>
+  <span class="doccomment">/// This is often more efficient than making a</span>
+  <span class="doccomment">/// [`BoundedRandU32`](crate::BoundedRandU32) if you don&#39;t need to use a</span>
+  <span class="doccomment">/// specific bound value more than once.</span>
   <span class="doccomment">///</span>
   <span class="doccomment">/// ## Panics</span>
   <span class="doccomment">/// * If the input is 0.</span>
@@ -351,152 +264,6 @@
     <span class="ident">high</span>
   }
 
-  <span class="doccomment">/// Performs an `XdY` style dice roll.</span>
-  <span class="doccomment">///</span>
-  <span class="doccomment">/// * If `count` or `sides` are less than 0, the output is 0.</span>
-  <span class="doccomment">/// * Requires linear time to compute based on `count`. Expected inputs are 20</span>
-  <span class="doccomment">///   or less.</span>
-  <span class="attribute">#[<span class="ident">inline</span>]</span>
-  <span class="kw">fn</span> <span class="ident">dice</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">count</span>: <span class="ident">i32</span>, <span class="ident">sides</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
-    <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
-    <span class="kw">let</span> <span class="ident">range</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">sides</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">1</span>) {
-      <span class="ident">Ordering</span>::<span class="ident">Less</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="number">0</span>,
-      <span class="ident">Ordering</span>::<span class="ident">Equal</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">count</span>.<span class="ident">max</span>(<span class="number">0</span>),
-      <span class="ident">Ordering</span>::<span class="ident">Greater</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">sides</span> {
-        <span class="number">4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">D4</span>,
-        <span class="number">6</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">D6</span>,
-        <span class="number">8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">D8</span>,
-        <span class="number">10</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">D10</span>,
-        <span class="number">12</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">D12</span>,
-        <span class="number">20</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">D20</span>,
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">StandardDie</span>::<span class="ident">new</span>(<span class="ident">sides</span> <span class="kw">as</span> <span class="ident">u32</span>),
-      },
-    };
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> <span class="number">0_i32</span>;
-    <span class="kw">while</span> <span class="ident">count</span> <span class="op">&gt;</span> <span class="number">0</span> {
-      <span class="ident">t</span> <span class="op">=</span> <span class="ident">t</span>.<span class="ident">wrapping_add</span>(<span class="ident">range</span>.<span class="ident">sample</span>(<span class="self">self</span>));
-      <span class="ident">count</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
-    }
-    <span class="ident">t</span>
-  }
-
-  <span class="doccomment">/// Performs a &quot;step&quot; roll according to the 4e chart.</span>
-  <span class="doccomment">///</span>
-  <span class="doccomment">/// This relates to a particular paper and pencil RPG. If you&#39;re not familiar</span>
-  <span class="doccomment">/// with the game that&#39;s fine.</span>
-  <span class="doccomment">/// * The average output of any positive value is approximately equal to the</span>
-  <span class="doccomment">///   input, with no hard upper bound.</span>
-  <span class="doccomment">/// * The output of any non-positive value is 1.</span>
-  <span class="doccomment">/// * Requires linear time to compute. Expected inputs are 30 or less.</span>
-  <span class="attribute">#[<span class="ident">inline</span>]</span>
-  <span class="kw">fn</span> <span class="ident">step_ed4</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">step</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
-    <span class="kw">if</span> <span class="ident">step</span> <span class="op">&lt;</span> <span class="number">1</span> {
-      <span class="number">1</span>
-    } <span class="kw">else</span> {
-      <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0</span>;
-      <span class="kw">while</span> <span class="ident">step</span> <span class="op">&gt;</span> <span class="number">13</span> {
-        <span class="ident">total</span> <span class="op">=</span> <span class="ident">total</span>.<span class="ident">wrapping_add</span>(<span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X12</span>.<span class="ident">sample</span>(<span class="self">self</span>));
-        <span class="ident">step</span> <span class="op">-</span><span class="op">=</span> <span class="number">7</span>;
-      }
-      <span class="ident">total</span>.<span class="ident">wrapping_add</span>(<span class="kw">match</span> <span class="ident">step</span> {
-        <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X4</span>.<span class="ident">sample</span>(<span class="self">self</span>).<span class="ident">wrapping_sub</span>(<span class="number">2</span>).<span class="ident">max</span>(<span class="number">1</span>),
-        <span class="number">2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X4</span>.<span class="ident">sample</span>(<span class="self">self</span>).<span class="ident">wrapping_sub</span>(<span class="number">1</span>).<span class="ident">max</span>(<span class="number">1</span>),
-        <span class="number">3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X4</span>.<span class="ident">sample</span>(<span class="self">self</span>),
-        <span class="number">4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X6</span>.<span class="ident">sample</span>(<span class="self">self</span>),
-        <span class="number">5</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X8</span>.<span class="ident">sample</span>(<span class="self">self</span>),
-        <span class="number">6</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X10</span>.<span class="ident">sample</span>(<span class="self">self</span>),
-        <span class="number">7</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X12</span>.<span class="ident">sample</span>(<span class="self">self</span>),
-        <span class="number">8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X6</span>.<span class="ident">sample</span>(<span class="self">self</span>).<span class="ident">wrapping_add</span>(<span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X6</span>.<span class="ident">sample</span>(<span class="self">self</span>)),
-        <span class="number">9</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X8</span>.<span class="ident">sample</span>(<span class="self">self</span>).<span class="ident">wrapping_add</span>(<span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X6</span>.<span class="ident">sample</span>(<span class="self">self</span>)),
-        <span class="number">10</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X8</span>.<span class="ident">sample</span>(<span class="self">self</span>).<span class="ident">wrapping_add</span>(<span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X8</span>.<span class="ident">sample</span>(<span class="self">self</span>)),
-        <span class="number">11</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X10</span>.<span class="ident">sample</span>(<span class="self">self</span>).<span class="ident">wrapping_add</span>(<span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X8</span>.<span class="ident">sample</span>(<span class="self">self</span>)),
-        <span class="number">12</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X10</span>.<span class="ident">sample</span>(<span class="self">self</span>).<span class="ident">wrapping_add</span>(<span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X10</span>.<span class="ident">sample</span>(<span class="self">self</span>)),
-        <span class="number">13</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X12</span>.<span class="ident">sample</span>(<span class="self">self</span>).<span class="ident">wrapping_add</span>(<span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">X10</span>.<span class="ident">sample</span>(<span class="self">self</span>)),
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
-      })
-    }
-  }
-
-  <span class="doccomment">/// Rolls an After Sundown style dice pool.</span>
-  <span class="doccomment">///</span>
-  <span class="doccomment">/// This relates to a particular paper and pencil RPG. If you&#39;re not familiar</span>
-  <span class="doccomment">/// with the game that&#39;s fine.</span>
-  <span class="doccomment">/// * `size` D6s are rolled. This returns the number of them that are a 5 or</span>
-  <span class="doccomment">///   6.</span>
-  <span class="attribute">#[<span class="ident">inline</span>]</span>
-  <span class="kw">fn</span> <span class="ident">sundown_pool</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">size</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hits</span> <span class="op">=</span> <span class="number">0</span>;
-    <span class="kw">while</span> <span class="ident">size</span> <span class="op">&gt;</span> <span class="number">0</span> {
-      <span class="kw">if</span> <span class="kw">crate</span>::<span class="ident">dice</span>::<span class="ident">D6</span>.<span class="ident">sample</span>(<span class="self">self</span>) <span class="op">&gt;</span><span class="op">=</span> <span class="number">5</span> {
-        <span class="ident">hits</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>
-      }
-      <span class="ident">size</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
-    }
-    <span class="ident">hits</span>
-  }
-
-  <span class="doccomment">/// Returns a value in `0..x` with the odds modified by `luck`.</span>
-  <span class="doccomment">///</span>
-  <span class="doccomment">/// This pertains to a particular video game. If you&#39;re not familiar with the</span>
-  <span class="doccomment">/// game that&#39;s fine.</span>
-  <span class="doccomment">/// * This is a constant time operation.</span>
-  <span class="doccomment">/// * higher luck pushes the output towards zero.</span>
-  <span class="doccomment">/// * lower luck pushes the output towards the upper value.</span>
-  <span class="doccomment">/// * `luck` is expected to be +/-30</span>
-  <span class="doccomment">///</span>
-  <span class="doccomment">/// ## Panics</span>
-  <span class="doccomment">/// * If `x` is 0 or less.</span>
-  <span class="attribute">#[<span class="ident">inline</span>]</span>
-  <span class="kw">fn</span> <span class="ident">rn_bounded_luck</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">x</span>: <span class="ident">i32</span>, <span class="ident">luck</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">x</span> <span class="op">&gt;</span> <span class="number">0</span>);
-    <span class="kw">let</span> <span class="ident">adjustment</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">15</span> { (<span class="ident">luck</span>.<span class="ident">abs</span>() <span class="op">+</span> <span class="number">1</span>) <span class="op">/</span> <span class="number">3</span> <span class="op">*</span> <span class="ident">luck</span>.<span class="ident">signum</span>() } <span class="kw">else</span> { <span class="ident">luck</span> };
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_bounded</span>(<span class="ident">x</span> <span class="kw">as</span> <span class="ident">u32</span>) <span class="kw">as</span> <span class="ident">i32</span>;
-    <span class="kw">if</span> <span class="ident">adjustment</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">next_bounded</span>(<span class="number">37</span> <span class="op">+</span> <span class="ident">adjustment</span>.<span class="ident">abs</span>() <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
-      <span class="ident">i</span> <span class="op">-</span><span class="op">=</span> <span class="ident">adjustment</span>;
-      <span class="ident">i</span> <span class="op">=</span> <span class="ident">i</span>.<span class="ident">max</span>(<span class="number">0</span>).<span class="ident">min</span>(<span class="ident">x</span> <span class="op">-</span> <span class="number">1</span>);
-    }
-    <span class="ident">i</span>
-  }
-
-  <span class="doccomment">/// Returns a value of 1 or more.</span>
-  <span class="doccomment">///</span>
-  <span class="doccomment">/// * The output starts at 1, then has a repeated `1/x` chance of getting +1.</span>
-  <span class="doccomment">/// * As soon as the value doesn&#39;t get a +1, it is returned.</span>
-  <span class="doccomment">///</span>
-  <span class="doccomment">/// ## Panics</span>
-  <span class="doccomment">/// * If `x` is less than 2.</span>
-  <span class="attribute">#[<span class="ident">inline</span>]</span>
-  <span class="kw">fn</span> <span class="ident">rn_exponential_decay</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">x</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">x</span> <span class="op">&gt;</span> <span class="number">1</span>);
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">temp</span> <span class="op">=</span> <span class="number">1</span>;
-    <span class="kw">while</span> <span class="self">self</span>.<span class="ident">next_bounded</span>(<span class="ident">x</span> <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
-      <span class="ident">temp</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-    }
-    <span class="ident">temp</span>
-  }
-
-  <span class="doccomment">/// Returns a value.</span>
-  <span class="doccomment">///</span>
-  <span class="doccomment">/// This pertains to a particular video game. If you&#39;re not familiar with the</span>
-  <span class="doccomment">/// game that&#39;s fine.</span>
-  <span class="doccomment">/// * The input value affects the output.</span>
-  <span class="doccomment">/// * This runs in constant time.</span>
-  <span class="attribute">#[<span class="ident">inline</span>]</span>
-  <span class="kw">fn</span> <span class="ident">rn_z</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">i64</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">temp</span> <span class="op">=</span> <span class="number">1000_i64</span>;
-    <span class="ident">temp</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">next_bounded</span>(<span class="number">1000</span>) <span class="kw">as</span> <span class="ident">i64</span>;
-    <span class="ident">temp</span> <span class="kw-2">*</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">rn_exponential_decay</span>(<span class="number">4</span>).<span class="ident">min</span>(<span class="number">5</span>) <span class="kw">as</span> <span class="ident">i64</span>;
-    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">next_bool</span>() {
-      <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">temp</span>;
-      <span class="ident">x</span> <span class="op">/</span><span class="op">=</span> <span class="number">1000</span>;
-    } <span class="kw">else</span> {
-      <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="number">1000</span>;
-      <span class="ident">x</span> <span class="op">/</span><span class="op">=</span> <span class="ident">temp</span>;
-    }
-    <span class="ident">x</span> <span class="kw">as</span> <span class="ident">i32</span>
-  }
-
   <span class="doccomment">/// Gets a value out of the slice given (by copy).</span>
   <span class="doccomment">///</span>
   <span class="doccomment">/// * The default impl will not pick past index `u32::MAX`.</span>
@@ -506,7 +273,7 @@
     <span class="self">Self</span>: <span class="ident">Sized</span>,
     <span class="ident">T</span>: <span class="ident">Copy</span>,
   {
-    <span class="kw">let</span> <span class="ident">end</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">free_utils</span>::<span class="ident">saturating_usize_as_u32</span>(<span class="ident">buf</span>.<span class="ident">len</span>());
+    <span class="kw">let</span> <span class="ident">end</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">saturating_usize_as_u32</span>(<span class="ident">buf</span>.<span class="ident">len</span>());
     <span class="ident">buf</span>[<span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="self">self</span>.<span class="ident">next_bounded</span>(<span class="ident">end</span>)).<span class="ident">unwrap</span>()]
   }
 
@@ -518,7 +285,7 @@
   <span class="kw">where</span>
     <span class="self">Self</span>: <span class="ident">Sized</span>,
   {
-    <span class="kw">let</span> <span class="ident">end</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">free_utils</span>::<span class="ident">saturating_usize_as_u32</span>(<span class="ident">buf</span>.<span class="ident">len</span>());
+    <span class="kw">let</span> <span class="ident">end</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">saturating_usize_as_u32</span>(<span class="ident">buf</span>.<span class="ident">len</span>());
     <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="self">self</span>.<span class="ident">next_bounded</span>(<span class="ident">end</span>)).<span class="ident">unwrap</span>()]
   }
 
@@ -530,7 +297,7 @@
   <span class="kw">where</span>
     <span class="self">Self</span>: <span class="ident">Sized</span>,
   {
-    <span class="kw">let</span> <span class="ident">end</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">free_utils</span>::<span class="ident">saturating_usize_as_u32</span>(<span class="ident">buf</span>.<span class="ident">len</span>());
+    <span class="kw">let</span> <span class="ident">end</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">saturating_usize_as_u32</span>(<span class="ident">buf</span>.<span class="ident">len</span>());
     <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[<span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="self">self</span>.<span class="ident">next_bounded</span>(<span class="ident">end</span>)).<span class="ident">unwrap</span>()]
   }
 
@@ -560,6 +327,27 @@
 
 <span class="comment">// Asserts that `Gen32` is an object-safe trait.</span>
 <span class="kw">const</span> <span class="kw">_</span>: [<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Gen32</span>; <span class="number">0</span>] <span class="op">=</span> [];
+
+<span class="doccomment">/// Converts the `usize` into a `u32`, or gives `u32::MAX` if that wouldn&#39;t fit.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">const</span> <span class="kw">fn</span> <span class="ident">saturating_usize_as_u32</span>(<span class="ident">val</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+  <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;16&quot;</span>)]</span>
+  {
+    <span class="ident">val</span> <span class="kw">as</span> <span class="ident">u32</span>
+  }
+  <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
+  {
+    <span class="ident">val</span> <span class="kw">as</span> <span class="ident">u32</span>
+  }
+  <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
+  {
+    <span class="kw">if</span> <span class="ident">val</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">core</span>::<span class="ident">u32</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">usize</span> {
+      <span class="ident">val</span> <span class="kw">as</span> <span class="ident">u32</span>
+    } <span class="kw">else</span> {
+      <span class="ident">core</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>
+    }
+  }
+}
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="randomize" data-search-js="../../search-index.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
