@@ -10,7 +10,9 @@ use super::*;
 pub struct BoundedRandU32 {
   /// number of possible outputs. outputs will be in `0 .. count`
   count: u32,
-  /// Multiplication threshold thing. https://arxiv.org/abs/1805.10941
+  /// Multiplication threshold thing.
+  ///
+  /// <https://arxiv.org/abs/1805.10941>
   threshold: u32,
 }
 impl BoundedRandU32 {

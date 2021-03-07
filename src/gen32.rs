@@ -32,6 +32,9 @@ pub trait Gen32 {
   }
 
   /// Returns an `f32` in the unsigned unit range, `[0, 1]`
+  ///
+  /// If you'd like `[0, 1)` then just use this and reroll in the (very
+  /// unlikely) case that you do get 1.0
   #[inline]
   fn next_f32_unit(&mut self) -> f32 {
     crate::free_utils::ieee754_random_f32(self, true)
@@ -43,10 +46,26 @@ pub trait Gen32 {
     crate::free_utils::ieee754_random_f32(self, false)
   }
 
+  /// Returns an `f64` in the unsigned unit range, `[0, 1]`
+  ///
+  /// If you'd like `[0, 1)` then just use this and reroll in the (very
+  /// unlikely) case that you do get 1.0
+  #[inline]
+  fn next_f64_unit(&mut self) -> f64 {
+    crate::free_utils::ieee754_random_f64(self, true)
+  }
+
+  /// Returns an `f64` in the signed unit range, `[-1, 1]`
+  #[inline]
+  fn next_f64_signed_unit(&mut self) -> f64 {
+    crate::free_utils::ieee754_random_f64(self, false)
+  }
+
   /// Gives a value within `0 .. B`
   ///
-  /// This is often more efficient than making a [`BoundedRandU32`] if you don't
-  /// need to use a specific bound value more than once.
+  /// This is often more efficient than making a
+  /// [`BoundedRandU32`](crate::BoundedRandU32) if you don't need to use a
+  /// specific bound value more than once.
   ///
   /// ## Panics
   /// * If the input is 0.
@@ -68,152 +87,6 @@ pub trait Gen32 {
     high
   }
 
-  /// Performs an `XdY` style dice roll.
-  ///
-  /// * If `count` or `sides` are less than 0, the output is 0.
-  /// * Requires linear time to compute based on `count`. Expected inputs are 20
-  ///   or less.
-  #[inline]
-  fn dice(&mut self, mut count: i32, sides: i32) -> i32 {
-    use core::cmp::Ordering;
-    let range = match sides.cmp(&1) {
-      Ordering::Less => return 0,
-      Ordering::Equal => return count.max(0),
-      Ordering::Greater => match sides {
-        4 => crate::dice::D4,
-        6 => crate::dice::D6,
-        8 => crate::dice::D8,
-        10 => crate::dice::D10,
-        12 => crate::dice::D12,
-        20 => crate::dice::D20,
-        _ => crate::dice::StandardDie::new(sides as u32),
-      },
-    };
-    let mut t = 0_i32;
-    while count > 0 {
-      t = t.wrapping_add(range.sample(self));
-      count -= 1;
-    }
-    t
-  }
-
-  /// Performs a "step" roll according to the 4e chart.
-  ///
-  /// This relates to a particular paper and pencil RPG. If you're not familiar
-  /// with the game that's fine.
-  /// * The average output of any positive value is approximately equal to the
-  ///   input, with no hard upper bound.
-  /// * The output of any non-positive value is 1.
-  /// * Requires linear time to compute. Expected inputs are 30 or less.
-  #[inline]
-  fn step_ed4(&mut self, mut step: i32) -> i32 {
-    if step < 1 {
-      1
-    } else {
-      let mut total: i32 = 0;
-      while step > 13 {
-        total = total.wrapping_add(crate::dice::X12.sample(self));
-        step -= 7;
-      }
-      total.wrapping_add(match step {
-        1 => crate::dice::X4.sample(self).wrapping_sub(2).max(1),
-        2 => crate::dice::X4.sample(self).wrapping_sub(1).max(1),
-        3 => crate::dice::X4.sample(self),
-        4 => crate::dice::X6.sample(self),
-        5 => crate::dice::X8.sample(self),
-        6 => crate::dice::X10.sample(self),
-        7 => crate::dice::X12.sample(self),
-        8 => crate::dice::X6.sample(self).wrapping_add(crate::dice::X6.sample(self)),
-        9 => crate::dice::X8.sample(self).wrapping_add(crate::dice::X6.sample(self)),
-        10 => crate::dice::X8.sample(self).wrapping_add(crate::dice::X8.sample(self)),
-        11 => crate::dice::X10.sample(self).wrapping_add(crate::dice::X8.sample(self)),
-        12 => crate::dice::X10.sample(self).wrapping_add(crate::dice::X10.sample(self)),
-        13 => crate::dice::X12.sample(self).wrapping_add(crate::dice::X10.sample(self)),
-        _ => unreachable!(),
-      })
-    }
-  }
-
-  /// Rolls an After Sundown style dice pool.
-  ///
-  /// This relates to a particular paper and pencil RPG. If you're not familiar
-  /// with the game that's fine.
-  /// * `size` D6s are rolled. This returns the number of them that are a 5 or
-  ///   6.
-  #[inline]
-  fn sundown_pool(&mut self, mut size: u32) -> u32 {
-    let mut hits = 0;
-    while size > 0 {
-      if crate::dice::D6.sample(self) >= 5 {
-        hits += 1
-      }
-      size -= 1;
-    }
-    hits
-  }
-
-  /// Returns a value in `0..x` with the odds modified by `luck`.
-  ///
-  /// This pertains to a particular video game. If you're not familiar with the
-  /// game that's fine.
-  /// * This is a constant time operation.
-  /// * higher luck pushes the output towards zero.
-  /// * lower luck pushes the output towards the upper value.
-  /// * `luck` is expected to be +/-30
-  ///
-  /// ## Panics
-  /// * If `x` is 0 or less.
-  #[inline]
-  fn rn_bounded_luck(&mut self, x: i32, luck: i32) -> i32 {
-    assert!(x > 0);
-    let adjustment = if x <= 15 { (luck.abs() + 1) / 3 * luck.signum() } else { luck };
-    let mut i = self.next_bounded(x as u32) as i32;
-    if adjustment != 0 && self.next_bounded(37 + adjustment.abs() as u32) != 0 {
-      i -= adjustment;
-      i = i.max(0).min(x - 1);
-    }
-    i
-  }
-
-  /// Returns a value of 1 or more.
-  ///
-  /// * The output starts at 1, then has a repeated `1/x` chance of getting +1.
-  /// * As soon as the value doesn't get a +1, it is returned.
-  ///
-  /// ## Panics
-  /// * If `x` is less than 2.
-  #[inline]
-  fn rn_exponential_decay(&mut self, x: i32) -> i32 {
-    assert!(x > 1);
-    let mut temp = 1;
-    while self.next_bounded(x as u32) == 0 {
-      temp += 1;
-    }
-    temp
-  }
-
-  /// Returns a value.
-  ///
-  /// This pertains to a particular video game. If you're not familiar with the
-  /// game that's fine.
-  /// * The input value affects the output.
-  /// * This runs in constant time.
-  #[inline]
-  fn rn_z(&mut self, i: i32) -> i32 {
-    let mut x = i as i64;
-    let mut temp = 1000_i64;
-    temp += self.next_bounded(1000) as i64;
-    temp *= self.rn_exponential_decay(4).min(5) as i64;
-    if self.next_bool() {
-      x *= temp;
-      x /= 1000;
-    } else {
-      x *= 1000;
-      x /= temp;
-    }
-    x as i32
-  }
-
   /// Gets a value out of the slice given (by copy).
   ///
   /// * The default impl will not pick past index `u32::MAX`.
@@ -223,7 +96,7 @@ pub trait Gen32 {
     Self: Sized,
     T: Copy,
   {
-    let end: u32 = crate::free_utils::saturating_usize_as_u32(buf.len());
+    let end: u32 = saturating_usize_as_u32(buf.len());
     buf[usize::try_from(self.next_bounded(end)).unwrap()]
   }
 
@@ -235,7 +108,7 @@ pub trait Gen32 {
   where
     Self: Sized,
   {
-    let end: u32 = crate::free_utils::saturating_usize_as_u32(buf.len());
+    let end: u32 = saturating_usize_as_u32(buf.len());
     &buf[usize::try_from(self.next_bounded(end)).unwrap()]
   }
 
@@ -247,7 +120,7 @@ pub trait Gen32 {
   where
     Self: Sized,
   {
-    let end: u32 = crate::free_utils::saturating_usize_as_u32(buf.len());
+    let end: u32 = saturating_usize_as_u32(buf.len());
     &mut buf[usize::try_from(self.next_bounded(end)).unwrap()]
   }
 
@@ -277,3 +150,24 @@ pub trait Gen32 {
 
 // Asserts that `Gen32` is an object-safe trait.
 const _: [&mut dyn Gen32; 0] = [];
+
+/// Converts the `usize` into a `u32`, or gives `u32::MAX` if that wouldn't fit.
+#[inline(always)]
+const fn saturating_usize_as_u32(val: usize) -> u32 {
+  #[cfg(target_pointer_width = "16")]
+  {
+    val as u32
+  }
+  #[cfg(target_pointer_width = "32")]
+  {
+    val as u32
+  }
+  #[cfg(target_pointer_width = "64")]
+  {
+    if val <= core::u32::MAX as usize {
+      val as u32
+    } else {
+      core::u32::MAX
+    }
+  }
+}

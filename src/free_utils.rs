@@ -16,6 +16,10 @@ pub fn next_binary_exp_distr32<G: Gen32 + ?Sized>(g: &mut G) -> u32 {
 
 /// Gives an `f32` output, in the unsigned (`[0,1]`) or signed (`[-1, 1]`)
 /// range.
+///
+/// This is the "primitive" that the [`Gen32`] trait uses in its default
+/// implementations for the `f32` methods. You might find it useful to use
+/// yourself directly, so here you go.
 pub fn ieee754_random_f32<G: Gen32 + ?Sized>(g: &mut G, signed: bool) -> f32 {
   // Returns random number in [0, 1] or [-1, 1] depending on signed.
   let bit_width = 32;
@@ -43,8 +47,12 @@ pub fn ieee754_random_f32<G: Gen32 + ?Sized>(g: &mut G, signed: bool) -> f32 {
   let increment_exponent = (mantissa == 0 && rand_bit) as i32;
 
   // We can use rest_bits to save more calls to the rng.
-  let mut exponent: i32 =
-    -1 + increment_exponent - if rest_bits > 0 { rest_bits.trailing_zeros() as i32 } else { num_rest_bits + next_binary_exp_distr32(g) as i32 };
+  let mut exponent: i32 = -1 + increment_exponent
+    - if rest_bits > 0 {
+      rest_bits.trailing_zeros() as i32
+    } else {
+      num_rest_bits + next_binary_exp_distr32(g) as i32
+    };
 
   // It is very unlikely our exponent is invalid at this point, but keep
   // regenerating it until it is valid.
@@ -57,7 +65,10 @@ pub fn ieee754_random_f32<G: Gen32 + ?Sized>(g: &mut G, signed: bool) -> f32 {
 
 /// Gives an `f64` output, in the unsigned (`[0,1]`) or signed (`[-1, 1]`)
 /// range.
-#[allow(dead_code)]
+///
+/// This is the "primitive" that the [`Gen32`] trait uses in its default
+/// implementations for the `f64` methods. You might find it useful to use
+/// yourself directly, so here you go.
 pub fn ieee754_random_f64<G: Gen32 + ?Sized>(g: &mut G, signed: bool) -> f64 {
   // Returns random number in [0, 1] or [-1, 1] depending on signed.
   let bit_width = 64;
@@ -85,8 +96,12 @@ pub fn ieee754_random_f64<G: Gen32 + ?Sized>(g: &mut G, signed: bool) -> f64 {
   let increment_exponent = (mantissa == 0 && rand_bit) as i32;
 
   // We can use rest_bits to save more calls to the rng.
-  let mut exponent: i32 =
-    -1 + increment_exponent - if rest_bits > 0 { rest_bits.trailing_zeros() as i32 } else { num_rest_bits + next_binary_exp_distr32(g) as i32 };
+  let mut exponent: i32 = -1 + increment_exponent
+    - if rest_bits > 0 {
+      rest_bits.trailing_zeros() as i32
+    } else {
+      num_rest_bits + next_binary_exp_distr32(g) as i32
+    };
 
   // It is very unlikely our exponent is invalid at this point, but keep
   // regenerating it until it is valid.
@@ -95,25 +110,4 @@ pub fn ieee754_random_f64<G: Gen32 + ?Sized>(g: &mut G, signed: bool) -> f64 {
   }
 
   f64::from_bits(sign_mask | (((exponent + exponent_bias) as u64) << num_mantissa_bits) | mantissa)
-}
-
-/// Converts the `usize` into a `u32`, or gives `u32::MAX` if that wouldn't fit.
-#[inline(always)]
-pub const fn saturating_usize_as_u32(val: usize) -> u32 {
-  #[cfg(target_pointer_width = "16")]
-  {
-    val as u32
-  }
-  #[cfg(target_pointer_width = "32")]
-  {
-    val as u32
-  }
-  #[cfg(target_pointer_width = "64")]
-  {
-    if val <= core::u32::MAX as usize {
-      val as u32
-    } else {
-      core::u32::MAX
-    }
-  }
 }

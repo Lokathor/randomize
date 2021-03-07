@@ -58,4 +58,4 @@ pub use bounded_rand::*;
 
 mod free_utils;
 
-pub mod dice;
+pub mod games;
