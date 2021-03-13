@@ -114,6 +114,12 @@
 <span id="111">111</span>
 <span id="112">112</span>
 <span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Free function utilities.</span>
 
@@ -123,6 +129,8 @@
 <span class="doccomment">/// distribution&quot;.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next_binary_exp_distr32</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen32</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+  <span class="comment">// This function provided by &lt;https://github.com/orlp&gt;</span>
+
   <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">g</span>.<span class="ident">next_u32</span>();
   <span class="kw">if</span> <span class="ident">r</span> <span class="op">&gt;</span> <span class="number">0</span> {
     <span class="ident">r</span>.<span class="ident">trailing_zeros</span>()
@@ -138,6 +146,8 @@
 <span class="doccomment">/// implementations for the `f32` methods. You might find it useful to use</span>
 <span class="doccomment">/// yourself directly, so here you go.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ieee754_random_f32</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen32</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>, <span class="ident">signed</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
+  <span class="comment">// This function provided by &lt;https://github.com/orlp&gt;</span>
+  
   <span class="comment">// Returns random number in [0, 1] or [-1, 1] depending on signed.</span>
   <span class="kw">let</span> <span class="ident">bit_width</span> <span class="op">=</span> <span class="number">32</span>;
   <span class="kw">let</span> <span class="ident">exponent_bias</span> <span class="op">=</span> <span class="number">127</span>;
@@ -187,6 +197,8 @@
 <span class="doccomment">/// implementations for the `f64` methods. You might find it useful to use</span>
 <span class="doccomment">/// yourself directly, so here you go.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ieee754_random_f64</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen32</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>, <span class="ident">signed</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+  <span class="comment">// This function provided by &lt;https://github.com/orlp&gt;</span>
+  
   <span class="comment">// Returns random number in [0, 1] or [-1, 1] depending on signed.</span>
   <span class="kw">let</span> <span class="ident">bit_width</span> <span class="op">=</span> <span class="number">64</span>;
   <span class="kw">let</span> <span class="ident">exponent_bias</span> <span class="op">=</span> <span class="number">1023</span>;
