@@ -6,6 +6,8 @@ use super::*;
 /// distribution".
 #[inline]
 pub fn next_binary_exp_distr32<G: Gen32 + ?Sized>(g: &mut G) -> u32 {
+  // This function provided by <https://github.com/orlp>
+
   let r: u32 = g.next_u32();
   if r > 0 {
     r.trailing_zeros()
@@ -21,6 +23,8 @@ pub fn next_binary_exp_distr32<G: Gen32 + ?Sized>(g: &mut G) -> u32 {
 /// implementations for the `f32` methods. You might find it useful to use
 /// yourself directly, so here you go.
 pub fn ieee754_random_f32<G: Gen32 + ?Sized>(g: &mut G, signed: bool) -> f32 {
+  // This function provided by <https://github.com/orlp>
+  
   // Returns random number in [0, 1] or [-1, 1] depending on signed.
   let bit_width = 32;
   let exponent_bias = 127;
@@ -70,6 +74,8 @@ pub fn ieee754_random_f32<G: Gen32 + ?Sized>(g: &mut G, signed: bool) -> f32 {
 /// implementations for the `f64` methods. You might find it useful to use
 /// yourself directly, so here you go.
 pub fn ieee754_random_f64<G: Gen32 + ?Sized>(g: &mut G, signed: bool) -> f64 {
+  // This function provided by <https://github.com/orlp>
+  
   // Returns random number in [0, 1] or [-1, 1] depending on signed.
   let bit_width = 64;
   let exponent_bias = 1023;
