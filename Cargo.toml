@@ -6,5 +6,8 @@ version = "5.0.0-alpha.0"
 edition = "2021"
 license = "Zlib OR Apache-2.0 OR MIT"
 
+[features]
+#default = ["getrandom"]
+
 [dependencies]
 getrandom = { version = "0.2.10", optional = true }
