@@ -1,9 +1,15 @@
+//! Base formulas used elsewhere in the crate.
+
 /// Advance a 32-bit LCG's state.
+#[inline]
+#[must_use]
 pub const fn lcg32_step(mul: u32, add: u32, state: u32) -> u32 {
   state.wrapping_mul(mul).wrapping_add(add)
 }
 
 /// Advance a 32-bit LCG by `delta` steps in `log2(delta)` time.
+#[inline]
+#[must_use]
 pub const fn lcg32_jump(mul: u32, add: u32, state: u32, mut delta: u32) -> u32 {
   let mut cur_mult: u32 = mul;
   let mut cur_plus: u32 = add;
@@ -22,11 +28,15 @@ pub const fn lcg32_jump(mul: u32, add: u32, state: u32, mut delta: u32) -> u32 {
 }
 
 /// Advance a 32-bit LCG's state.
+#[inline]
+#[must_use]
 pub const fn lcg64_step(mul: u64, add: u64, state: u64) -> u64 {
   state.wrapping_mul(mul).wrapping_add(add)
 }
 
 /// Advance a 32-bit LCG by `delta` steps in `log2(delta)` time.
+#[inline]
+#[must_use]
 pub const fn lcg64_jump(mul: u64, add: u64, state: u64, mut delta: u64) -> u64 {
   let mut cur_mult: u64 = mul;
   let mut cur_plus: u64 = add;
@@ -45,11 +55,15 @@ pub const fn lcg64_jump(mul: u64, add: u64, state: u64, mut delta: u64) -> u64 {
 }
 
 /// Advance a 32-bit LCG's state.
+#[inline]
+#[must_use]
 pub const fn lcg128_step(mul: u128, add: u128, state: u128) -> u128 {
   state.wrapping_mul(mul).wrapping_add(add)
 }
 
 /// Advance a 32-bit LCG by `delta` steps in `log2(delta)` time.
+#[inline]
+#[must_use]
 pub const fn lcg128_jump(mul: u128, add: u128, state: u128, mut delta: u128) -> u128 {
   let mut cur_mult: u128 = mul;
   let mut cur_plus: u128 = add;
@@ -68,6 +82,8 @@ pub const fn lcg128_jump(mul: u128, add: u128, state: u128, mut delta: u128) -> 
 }
 
 /// "Xor-shift high bits" then "randomized rotate", `u64` down to `u32`.
+#[inline]
+#[must_use]
 pub const fn xsh_rr_u64_to_u32(state: u64) -> u32 {
   // Note(Lokathor): Bit randomness quality is better in the higher bits. The
   // top 5 bits specify the random rotation, while the next 32 bits are the
@@ -80,6 +96,8 @@ pub const fn xsh_rr_u64_to_u32(state: u64) -> u32 {
 }
 
 /// "Xor-shift low bits" then "randomized rotate", `u128` to `u64`.
+#[inline]
+#[must_use]
 pub const fn xsl_rr_u128_to_u64(state: u128) -> u64 {
   // Note(Lokathor): Similar ideas to how `xsh_rr_u64_to_u32` works. At 128-bit
   // size we now use 6 bits to select the random rotation. The xor-shift is by
@@ -93,6 +111,8 @@ pub const fn xsl_rr_u128_to_u64(state: u128) -> u64 {
 
 /// Returns `k` with probability `2^(-k-1)`, a "binary exponential
 /// distribution".
+#[inline]
+#[must_use]
 pub fn next_binary_exp_distr32<F: FnMut() -> u32>(mut f: F) -> u32 {
   // Based on a function provided by <https://github.com/orlp>
 
@@ -112,6 +132,8 @@ pub fn next_binary_exp_distr32<F: FnMut() -> u32>(mut f: F) -> u32 {
 ///
 /// * signed: `[-1.0, 1.0]`
 /// * unsigned: `[0.0, 1.0]`
+#[inline]
+#[must_use]
 pub fn ieee754_random_f32<F: FnMut() -> u32>(mut f: F, signed: bool) -> f32 {
   // This function provided by <https://github.com/orlp>
 
@@ -162,6 +184,8 @@ pub fn ieee754_random_f32<F: FnMut() -> u32>(mut f: F, signed: bool) -> f32 {
 ///
 /// * signed: `[-1.0, 1.0]`
 /// * unsigned: `[0.0, 1.0]`
+#[inline]
+#[must_use]
 pub fn ieee754_random_f64<F: FnMut() -> u32>(mut f: F, signed: bool) -> f64 {
   // This function provided by <https://github.com/orlp>
 

@@ -1,4 +1,6 @@
-/// Stores the values to sample a `u32` number in `0 .. N`
+//! Types for bounded randomization.
+
+/// Allows sampling a `u32` number in `0 .. N`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct BoundedRandU32 {
   /// number of possible outputs. outputs will be in `0 .. count`
@@ -9,11 +11,17 @@ pub struct BoundedRandU32 {
   threshold: u32,
 }
 impl BoundedRandU32 {
+  #[allow(missing_docs)]
   pub const _4: Self = Self::new(4);
+  #[allow(missing_docs)]
   pub const _6: Self = Self::new(6);
+  #[allow(missing_docs)]
   pub const _8: Self = Self::new(8);
+  #[allow(missing_docs)]
   pub const _10: Self = Self::new(10);
+  #[allow(missing_docs)]
   pub const _12: Self = Self::new(12);
+  #[allow(missing_docs)]
   pub const _20: Self = Self::new(20);
 
   /// Constructs a new value.
@@ -73,7 +81,7 @@ impl BoundedRandU32 {
   }
 }
 
-/// Stores the values to sample a `u16` number in `0 .. N`
+/// Allows sampling a `u16` number in `0 .. N`.
 ///
 /// The primary advantage of this type over [BoundedRandU32] is that this type
 /// samples using only 32-bit multiplications rather than 64-bit
@@ -88,11 +96,17 @@ pub struct BoundedRandU16 {
   threshold: u16,
 }
 impl BoundedRandU16 {
+  #[allow(missing_docs)]
   pub const _4: Self = Self::new(4);
+  #[allow(missing_docs)]
   pub const _6: Self = Self::new(6);
+  #[allow(missing_docs)]
   pub const _8: Self = Self::new(8);
+  #[allow(missing_docs)]
   pub const _10: Self = Self::new(10);
+  #[allow(missing_docs)]
   pub const _12: Self = Self::new(12);
+  #[allow(missing_docs)]
   pub const _20: Self = Self::new(20);
 
   /// Constructs a new value.
