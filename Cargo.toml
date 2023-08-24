@@ -1,10 +1,14 @@
 [package]
 name = "randomize"
-version = "4.0.0-alpha.4"
-authors = ["Lokathor <zefria@gmail.com>"]
-edition = "2018"
+description = "Randomization routines"
+repository = "https://github.com/Lokathor/randomize"
+version = "5.0.0-alpha.0"
+edition = "2021"
 license = "Zlib OR Apache-2.0 OR MIT"
 
 [features]
-default = ["os_random"]
-os_random = []
+default = ["getrandom"]
+
+[dependencies]
+bytemuck = { version = "1.13.1", features = ["min_const_generics"] }
+getrandom = { version = "0.2.10", optional = true }
