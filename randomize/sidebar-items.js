@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["fill_byte_buffer_from_os_random","Fills a byte buffer with random bytes from an OS-specific source."]],"mod":[["games","Types for rolling dice."]],"struct":[["BoundedRandU32","Stores the values to sample a number in `0 .. N`"],["Pcg32","A permuted congruential generator with 32 bits of output per step."]],"trait":[["Gen32","A Generator with 32 bits of output per step."]]});
+window.SIDEBAR_ITEMS = {"mod":["formulas"],"struct":["BoundedRandU16","BoundedRandU32","PCG32","PCG32X"]};
