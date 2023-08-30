@@ -1,5 +1,8 @@
 //! Base formulas used elsewhere in the crate.
 
+/// This is the suggested multiplier for a PCG with 64 bits of state.
+pub const PCG_MUL_64: u64 = 6364136223846793005;
+
 /// Advance a 32-bit LCG's state.
 #[inline]
 #[must_use]
