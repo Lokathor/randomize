@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/pcg.rs`."><title>pcg.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="randomize" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (249595b75 2023-08-23)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../randomize/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/pcg.rs`."><title>pcg.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="randomize" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (84a9f4c6e 2023-08-29)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../randomize/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -164,22 +164,43 @@
 <a href="#164" id="164">164</a>
 <a href="#165" id="165">165</a>
 <a href="#166" id="166">166</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::formulas::{lcg64_jump, lcg64_step, xsh_rr_u64_to_u32};
+<a href="#167" id="167">167</a>
+<a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
+<a href="#174" id="174">174</a>
+<a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::formulas::{lcg64_jump, lcg64_step, xsh_rr_u64_to_u32, PCG_MUL_64};
 
-<span class="kw">const </span>PCG32_MUL: u64 = <span class="number">6364136223846793005</span>;
-
-<span class="doccomment">/// A [Permuted congruential generator][wp] with 32-bit output.
+<span class="doccomment">/// A [Permuted Congruential Generator][wp] with 32-bit output.
 ///
 /// [wp]: https://en.wikipedia.org/wiki/Permuted_congruential_generator
 </span><span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">pub struct </span>PCG32 {
-  <span class="doccomment">/// The generator&#39;s state, changes with each step.
+  <span class="doccomment">/// The generator&#39;s state.
+  ///
+  /// This changes with each step of the generator. It&#39;s the generator&#39;s
+  /// &quot;position&quot; within the output stream.
   </span><span class="kw">pub </span>state: u64,
 
-  <span class="doccomment">/// The generator&#39;s increment, doesn&#39;t change.
+  <span class="doccomment">/// The generator&#39;s increment.
   ///
-  /// If this is not an odd value the generator will have a reduced period
-  /// (though the generator will still otherwise work).
+  /// This doesn&#39;t change as the generator advances. Instead it determines which
+  /// of the possible output streams the generator will use. Each `inc` value
+  /// will give a different ordering of all the possible outputs.
+  ///
+  /// * When the `inc` value is **odd** then each stream is `2**64` elements
+  /// long.
+  /// * If the `inc` value is **even** the output stream is only `2**62`
+  /// elements long.
   </span><span class="kw">pub </span>inc: u64,
 }
 <span class="kw">impl </span>PCG32 {
@@ -192,7 +213,10 @@
 
   <span class="doccomment">/// Create a new generator seeded with data from
   /// [getrandom](getrandom::getrandom).
+  ///
+  /// This method ensures that the `inc` of the new generator is odd.
   </span><span class="attr">#[cfg(feature = <span class="string">&quot;getrandom&quot;</span>)]
+  #[cfg_attr(docs_rs, doc(cfg(feature = <span class="string">&quot;getrandom&quot;</span>)))]
   #[inline]
   </span><span class="kw">pub fn </span>from_getrandom() -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, getrandom::Error&gt; {
     <span class="kw">use </span>bytemuck::bytes_of_mut;
@@ -200,13 +224,13 @@
     <span class="kw">let </span><span class="kw-2">mut </span>buf = [<span class="number">0_u64</span>; <span class="number">2</span>];
     getrandom::getrandom(bytes_of_mut(<span class="kw-2">&amp;mut </span>buf))<span class="question-mark">?</span>;
 
-    <span class="prelude-val">Ok</span>(<span class="self">Self</span>::new(buf[<span class="number">0</span>], buf[<span class="number">1</span>]))
+    <span class="prelude-val">Ok</span>(<span class="self">Self</span>::new(buf[<span class="number">0</span>], buf[<span class="number">1</span>] | <span class="number">1</span>))
   }
 
   <span class="doccomment">/// Generate the next `u32` in the sequence.
   </span><span class="attr">#[inline]
   </span><span class="kw">pub fn </span>next_u32(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; u32 {
-    <span class="kw">let </span>new_state = lcg64_step(PCG32_MUL, <span class="self">self</span>.inc, <span class="self">self</span>.state);
+    <span class="kw">let </span>new_state = lcg64_step(PCG_MUL_64, <span class="self">self</span>.inc, <span class="self">self</span>.state);
     <span class="kw">let </span>out = xsh_rr_u64_to_u32(<span class="self">self</span>.state);
     <span class="self">self</span>.state = new_state;
     out
@@ -218,7 +242,7 @@
   /// passing `x.wrapping_neg()`.
   </span><span class="attr">#[inline]
   </span><span class="kw">pub fn </span>jump(<span class="kw-2">&amp;mut </span><span class="self">self</span>, delta: u64) {
-    <span class="self">self</span>.state = lcg64_jump(PCG32_MUL, <span class="self">self</span>.inc, <span class="self">self</span>.state, delta);
+    <span class="self">self</span>.state = lcg64_jump(PCG_MUL_64, <span class="self">self</span>.inc, <span class="self">self</span>.state, delta);
   }
 }
 
@@ -227,24 +251,25 @@
 ///
 /// [wp]: https://en.wikipedia.org/wiki/Permuted_congruential_generator
 ///
-/// The `K` value determines the number of elements in the extension array.
+/// This is like the [PCG32], but replaces the single `inc` field with an
+/// extension array of `K` elements. At each step of the generator a different
+/// element of the array is `XOR`-ed with the output, and every time the
+/// generator passes 0 the array is advanced (so that it&#39;s also advancing over
+/// time). This gives a radically larger generator period, and guarantees that
+/// any sequence of `K` outputs in a row will appear at least once within the
+/// generator&#39;s full output stream.
 ///
-/// * The generator&#39;s output sequence will be &quot;`K`-dimensionally
-///   equidistributed&quot;. In other words, any sequence of up to `K` elements in a
-///   row will exist *somewhere* within the complete output sequence.
-/// * For best results, `K` should be a power of 2. The type works with other
-///   `K` values, but when `K` is a power of 2 then selecting an element from
-///   the extension array is faster.
+/// For best results, `K` should be a power of 2. The type works with other `K`
+/// values, but when `K` is a power of 2 then selecting an element from the
+/// extension array is *significantly* faster (a bit mask instead of an integer
+/// division).
 </span><span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">pub struct </span>PCG32X&lt;<span class="kw">const </span>K: usize&gt; {
-  <span class="doccomment">/// The generator&#39;s state, changes with each step.
-  </span><span class="kw">pub </span>state: u64,
-
-  <span class="doccomment">/// The generator&#39;s increment, doesn&#39;t change.
+  <span class="doccomment">/// The generator&#39;s state.
   ///
-  /// If this is not an odd value the generator will have a reduced period
-  /// (though the generator will still otherwise work).
-  </span><span class="kw">pub </span>inc: u64,
+  /// This changes with each step of the generator. It&#39;s the generator&#39;s
+  /// &quot;position&quot; within the output stream.
+  </span><span class="kw">pub </span>state: u64,
 
   <span class="doccomment">/// The generator&#39;s extension array. The generator&#39;s base output is XOR&#39;d with
   /// random elements of this array to determine the final output at each step.
@@ -254,22 +279,23 @@
   <span class="doccomment">/// Creates a new generator by directly using the value given.
   </span><span class="attr">#[inline]
   #[must_use]
-  </span><span class="kw">pub const fn </span>new(state: u64, inc: u64, ext: [u32; K]) -&gt; <span class="self">Self </span>{
-    <span class="self">Self </span>{ state, inc, ext }
+  </span><span class="kw">pub const fn </span>new(state: u64, ext: [u32; K]) -&gt; <span class="self">Self </span>{
+    <span class="self">Self </span>{ state, ext }
   }
 
   <span class="doccomment">/// Create a new generator seeded with data from
   /// [getrandom](getrandom::getrandom).
   </span><span class="attr">#[cfg(feature = <span class="string">&quot;getrandom&quot;</span>)]
+  #[cfg_attr(docs_rs, doc(cfg(feature = <span class="string">&quot;getrandom&quot;</span>)))]
   #[inline]
   </span><span class="kw">pub fn </span>from_getrandom() -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, getrandom::Error&gt; {
     <span class="kw">use </span>bytemuck::bytes_of_mut;
 
-    <span class="kw">let </span><span class="kw-2">mut </span>state_inc = [<span class="number">0_u64</span>; <span class="number">2</span>];
-    getrandom::getrandom(bytes_of_mut(<span class="kw-2">&amp;mut </span>state_inc))<span class="question-mark">?</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>state = <span class="number">0_u64</span>;
+    getrandom::getrandom(bytes_of_mut(<span class="kw-2">&amp;mut </span>state))<span class="question-mark">?</span>;
 
-    <span class="kw">let </span><span class="kw-2">mut </span>out = <span class="self">Self</span>::new(state_inc[<span class="number">0</span>], state_inc[<span class="number">1</span>], [<span class="number">0_u32</span>; K]);
-    out.ext_getrandom()<span class="question-mark">?</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>out = <span class="self">Self</span>::new(state, [<span class="number">0_u32</span>; K]);
+    out.scramble_ext_array()<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(out)
   }
@@ -279,8 +305,9 @@
   /// This will completely scramble the generator&#39;s position within the output
   /// sequence.
   </span><span class="attr">#[cfg(feature = <span class="string">&quot;getrandom&quot;</span>)]
+  #[cfg_attr(docs_rs, doc(cfg(feature = <span class="string">&quot;getrandom&quot;</span>)))]
   #[inline]
-  </span><span class="kw">pub fn </span>ext_getrandom(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), getrandom::Error&gt; {
+  </span><span class="kw">pub fn </span>scramble_ext_array(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), getrandom::Error&gt; {
     <span class="kw">use </span>bytemuck::bytes_of_mut;
 
     getrandom::getrandom(bytes_of_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>.ext))
@@ -289,7 +316,7 @@
   <span class="doccomment">/// Generate the next `u32` in the sequence.
   </span><span class="attr">#[inline]
   </span><span class="kw">pub fn </span>next_u32(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; u32 {
-    <span class="kw">let </span>new_state = lcg64_step(PCG32_MUL, <span class="self">self</span>.inc, <span class="self">self</span>.state);
+    <span class="kw">let </span>new_state = lcg64_step(PCG_MUL_64, <span class="number">1</span>, <span class="self">self</span>.state);
     <span class="kw">let </span>out = <span class="kw">if </span>K &gt; <span class="number">0 </span>{
       <span class="kw">let </span>ext_index: usize = <span class="self">self</span>.state <span class="kw">as </span>usize % K;
       <span class="kw">let </span>out = xsh_rr_u64_to_u32(<span class="self">self</span>.state) ^ <span class="self">self</span>.ext[ext_index];
@@ -308,8 +335,9 @@
   ///
   /// The given `delta` is added to the lowest index element of the extension
   /// array, and if that addition carries then the carry will add one to the
-  /// next higher element, and so on. Normally the PCG will call this
-  /// automatically whenever its state value passes 0.
+  /// next higher element, and so on.
+  ///
+  /// The generator will call this whenever its state value passes 0.
   </span><span class="attr">#[inline(never)]
   </span><span class="kw">fn </span>ext_add(<span class="kw-2">&amp;mut </span><span class="self">self</span>, delta: u32) {
     <span class="kw">if </span>K == <span class="number">0 </span>{
