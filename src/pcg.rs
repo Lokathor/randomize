@@ -3,6 +3,8 @@ use crate::formulas::{lcg64_jump, lcg64_step, xsh_rr_u64_to_u32, PCG_MUL_64};
 /// A [Permuted Congruential Generator][wp] with 32-bit output.
 ///
 /// [wp]: https://en.wikipedia.org/wiki/Permuted_congruential_generator
+///
+/// * Period: `2**64` when `inc` is odd, otherwise `2**62`
 #[derive(Debug, Clone)]
 pub struct PCG32 {
   /// The generator's state.
@@ -89,6 +91,8 @@ impl PCG32 {
 /// values, but when `K` is a power of 2 then selecting an element from the
 /// extension array is *significantly* faster (a bit mask instead of an integer
 /// division).
+///
+/// * Period: `2**(64+32*k)`
 #[derive(Debug, Clone)]
 pub struct PCG32X<const K: usize> {
   /// The generator's state.
