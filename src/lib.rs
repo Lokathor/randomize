@@ -13,11 +13,11 @@
 //!
 //! * Create a [PCG32] or [PCG32X] value as your generator.
 //!   * If you enable this crate's `getrandom` cargo feature then both types
-//!     will have constructor functions to seed a generator from the
+//!     will have constructor functions to handle seeding a generator from the
 //!     [getrandom](getrandom::getrandom) function.
 //! * Call `next_u32` on the generator to get pseudo-random `u32` values. Should
-//!   it matter, the higher bits of the output will be *slightly* better
-//!   randomness quality than the lower bits of the output.
+//!   it matter, with these two generator types the higher bits of the output
+//!   will have *slightly* better randomness quality than the lower bits.
 //! * At your option, import the [Gen32] trait for various extension methods.
 
 mod bounded_rand;
