@@ -58,15 +58,17 @@ impl PCG32 {
 
   /// Jump the generator the given number of steps forward in the sequence.
   ///
+  /// This can go `x` steps forward in only about `log2(x)` time.
+  ///
   /// Because the sequence is a loop, you can go "back" by `x` steps just by
-  /// passing `x.wrapping_neg()`.
+  /// passing `x.wrapping_neg()` to go sufficiently far forward.
   #[inline]
   pub fn jump(&mut self, delta: u64) {
     self.state = lcg64_jump(PCG_MUL_64, self.inc, self.state, delta);
   }
 }
 
-/// A [Permuted congruential generator][wp] with 32-bit output extended to `K`
+/// A [Permuted congruential generator][wp] with 32-bit output, extended to `K`
 /// dimensions.
 ///
 /// [wp]: https://en.wikipedia.org/wiki/Permuted_congruential_generator
@@ -74,10 +76,14 @@ impl PCG32 {
 /// This is like the [PCG32], but replaces the single `inc` field with an
 /// extension array of `K` elements. At each step of the generator a different
 /// element of the array is `XOR`-ed with the output, and every time the
-/// generator passes 0 the array is advanced (so that it's also advancing over
-/// time). This gives a radically larger generator period, and guarantees that
-/// any sequence of `K` outputs in a row will appear at least once within the
-/// generator's full output stream.
+/// generator passes 0 the array is advanced. Given enough time, the entire
+/// extension array will increment through all values (as if it were a
+/// `32*K`-bit number). This gives a radically larger generator period than the
+/// basic `PCG32`, and guarantees that any sequence of `K` outputs in a row will
+/// appear at least once within the generator's full output stream. Of course
+/// it's highly unlikely that your program will ever advance the generator
+/// through all possible states, but just the *possibility* that a given output
+/// sequence will definitely eventually occur can be comfort enough.
 ///
 /// For best results, `K` should be a power of 2. The type works with other `K`
 /// values, but when `K` is a power of 2 then selecting an element from the
@@ -105,6 +111,10 @@ impl<const K: usize> PCG32X<K> {
 
   /// Create a new generator seeded with data from
   /// [getrandom](getrandom::getrandom).
+  ///
+  /// ## Failure
+  /// * If the [getrandom](getrandom::getrandom) call fails the error bubbles
+  ///   up.
   #[cfg(feature = "getrandom")]
   #[cfg_attr(docs_rs, doc(cfg(feature = "getrandom")))]
   #[inline]
@@ -124,6 +134,10 @@ impl<const K: usize> PCG32X<K> {
   ///
   /// This will completely scramble the generator's position within the output
   /// sequence.
+  ///
+  /// ## Failure
+  /// * If the [getrandom](getrandom::getrandom) call fails the error bubbles
+  ///   up.
   #[cfg(feature = "getrandom")]
   #[cfg_attr(docs_rs, doc(cfg(feature = "getrandom")))]
   #[inline]
@@ -157,7 +171,9 @@ impl<const K: usize> PCG32X<K> {
   /// array, and if that addition carries then the carry will add one to the
   /// next higher element, and so on.
   ///
-  /// The generator will call this whenever its state value passes 0.
+  /// The generator will call this whenever its state value passes 0. This is an
+  /// extremely rare event, and so we've manually "outlined" the extension array
+  /// advancement.
   #[inline(never)]
   fn ext_add(&mut self, delta: u32) {
     if K == 0 {
