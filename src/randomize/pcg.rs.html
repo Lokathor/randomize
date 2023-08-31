@@ -194,11 +194,17 @@
 <a href="#194" id="194">194</a>
 <a href="#195" id="195">195</a>
 <a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::formulas::{lcg64_jump, lcg64_step, xsh_rr_u64_to_u32, PCG_MUL_64};
 
 <span class="doccomment">/// A [Permuted Congruential Generator][wp] with 32-bit output.
 ///
 /// [wp]: https://en.wikipedia.org/wiki/Permuted_congruential_generator
+///
+/// * Period: `2**64` when `inc` is odd, otherwise `2**62`
 </span><span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">pub struct </span>PCG32 {
   <span class="doccomment">/// The generator&#39;s state.
@@ -285,6 +291,8 @@
 /// values, but when `K` is a power of 2 then selecting an element from the
 /// extension array is *significantly* faster (a bit mask instead of an integer
 /// division).
+///
+/// * Period: `2**(64+32*k)`
 </span><span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">pub struct </span>PCG32X&lt;<span class="kw">const </span>K: usize&gt; {
   <span class="doccomment">/// The generator&#39;s state.
