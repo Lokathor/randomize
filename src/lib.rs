@@ -20,14 +20,14 @@
 //!   will have *slightly* better randomness quality than the lower bits.
 //! * At your option, import the [Gen32] trait for various extension methods.
 
-mod bounded_rand;
-pub use bounded_rand::*;
+pub mod formulas;
+use formulas::ieee754_random_f32;
 
 mod pcg;
-use formulas::ieee754_random_f32;
 pub use pcg::*;
 
-pub mod formulas;
+mod bounded_rand;
+pub use bounded_rand::*;
 
 /// A trait for pseudo-random number generators with 32-bit output per step.
 pub trait Gen32 {
@@ -55,8 +55,8 @@ pub trait Gen32 {
   /// Gives a value in the range `1..=4`
   #[inline]
   fn d4(&mut self) -> i32 {
-    let base = BoundedRandU16::_4.sample(|| (self.next_u32() >> 16) as u16);
-    i32::from(base) + 1
+    let base = self.next_u32() >> 30;
+    base as i32 + 1
   }
 
   /// Gives a value in the range `1..=6`
@@ -69,8 +69,8 @@ pub trait Gen32 {
   /// Gives a value in the range `1..=8`
   #[inline]
   fn d8(&mut self) -> i32 {
-    let base = BoundedRandU16::_8.sample(|| (self.next_u32() >> 16) as u16);
-    i32::from(base) + 1
+    let base = self.next_u32() >> 29;
+    base as i32 + 1
   }
 
   /// Gives a value in the range `1..=10`
