@@ -129,14 +129,14 @@
 //!   will have *slightly* better randomness quality than the lower bits.
 //! * At your option, import the [Gen32] trait for various extension methods.
 
-</span><span class="kw">mod </span>bounded_rand;
-<span class="kw">pub use </span>bounded_rand::<span class="kw-2">*</span>;
+</span><span class="kw">pub mod </span>formulas;
+<span class="kw">use </span>formulas::ieee754_random_f32;
 
 <span class="kw">mod </span>pcg;
-<span class="kw">use </span>formulas::ieee754_random_f32;
 <span class="kw">pub use </span>pcg::<span class="kw-2">*</span>;
 
-<span class="kw">pub mod </span>formulas;
+<span class="kw">mod </span>bounded_rand;
+<span class="kw">pub use </span>bounded_rand::<span class="kw-2">*</span>;
 
 <span class="doccomment">/// A trait for pseudo-random number generators with 32-bit output per step.
 </span><span class="kw">pub trait </span>Gen32 {
@@ -164,8 +164,8 @@
   <span class="doccomment">/// Gives a value in the range `1..=4`
   </span><span class="attr">#[inline]
   </span><span class="kw">fn </span>d4(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; i32 {
-    <span class="kw">let </span>base = BoundedRandU16::_4.sample(|| (<span class="self">self</span>.next_u32() &gt;&gt; <span class="number">16</span>) <span class="kw">as </span>u16);
-    i32::from(base) + <span class="number">1
+    <span class="kw">let </span>base = <span class="self">self</span>.next_u32() &gt;&gt; <span class="number">30</span>;
+    base <span class="kw">as </span>i32 + <span class="number">1
   </span>}
 
   <span class="doccomment">/// Gives a value in the range `1..=6`
@@ -178,8 +178,8 @@
   <span class="doccomment">/// Gives a value in the range `1..=8`
   </span><span class="attr">#[inline]
   </span><span class="kw">fn </span>d8(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; i32 {
-    <span class="kw">let </span>base = BoundedRandU16::_8.sample(|| (<span class="self">self</span>.next_u32() &gt;&gt; <span class="number">16</span>) <span class="kw">as </span>u16);
-    i32::from(base) + <span class="number">1
+    <span class="kw">let </span>base = <span class="self">self</span>.next_u32() &gt;&gt; <span class="number">29</span>;
+    base <span class="kw">as </span>i32 + <span class="number">1
   </span>}
 
   <span class="doccomment">/// Gives a value in the range `1..=10`
