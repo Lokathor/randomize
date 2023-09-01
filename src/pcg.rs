@@ -94,7 +94,7 @@ impl PCG32 {
 ///
 /// * Period: `2**(64+32*k)`
 #[derive(Debug, Clone)]
-pub struct PCG32X<const K: usize> {
+pub struct PCG32K<const K: usize> {
   /// The generator's state.
   ///
   /// This changes with each step of the generator. It's the generator's
@@ -105,7 +105,7 @@ pub struct PCG32X<const K: usize> {
   /// random elements of this array to determine the final output at each step.
   pub ext: [u32; K],
 }
-impl<const K: usize> PCG32X<K> {
+impl<const K: usize> PCG32K<K> {
   /// Creates a new generator by directly using the value given.
   #[inline]
   #[must_use]

@@ -101,9 +101,9 @@ impl Gen32 for PCG32 {
     PCG32::next_u32(self)
   }
 }
-impl<const K: usize> Gen32 for PCG32X<K> {
+impl<const K: usize> Gen32 for PCG32K<K> {
   #[inline]
   fn next_u32(&mut self) -> u32 {
-    PCG32X::<K>::next_u32(self)
+    PCG32K::<K>::next_u32(self)
   }
 }
