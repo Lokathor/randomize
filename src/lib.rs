@@ -11,7 +11,7 @@
 //!
 //! ## Using This Crate
 //!
-//! * Create a [PCG32] or [PCG32X] value as your generator.
+//! * Create a [PCG32] or [PCG32K] value as your generator.
 //!   * If you enable this crate's `getrandom` cargo feature then both types
 //!     will have constructor functions to handle seeding a generator from the
 //!     [getrandom](getrandom::getrandom) function.
