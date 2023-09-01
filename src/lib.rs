@@ -47,7 +47,7 @@ pub trait Gen32 {
     (self.next_u32() as i32) < 0
   }
 
-  /// Gives a value in `0.0 ..= 1.0`.
+  /// Gives a value in the range `0.0 ..= 1.0`
   #[inline]
   fn next_f32_unit(&mut self) -> f32 {
     ieee754_random_f32(|| self.next_u32(), false)
