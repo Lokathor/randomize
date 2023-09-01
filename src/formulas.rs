@@ -183,7 +183,7 @@ pub fn ieee754_random_f32<F: FnMut() -> u32>(mut f: F, signed: bool) -> f32 {
   f32::from_bits(sign_mask | final_exponent | mantissa)
 }
 
-/// Generates an `f32` in the signed or unsigned unit range.
+/// Generates an `f64` in the signed or unsigned unit range.
 ///
 /// * signed: `[-1.0, 1.0]`
 /// * unsigned: `[0.0, 1.0]`
