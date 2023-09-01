@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["formulas"],"struct":["BoundedRandU16","BoundedRandU32","PCG32","PCG32X"],"trait":["Gen32"]};
+window.SIDEBAR_ITEMS = {"mod":["formulas"],"struct":["BoundedRandU16","BoundedRandU32","PCG32","PCG32K"],"trait":["Gen32"]};
