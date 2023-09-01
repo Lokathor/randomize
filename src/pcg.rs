@@ -4,7 +4,7 @@ use crate::formulas::{lcg64_jump, lcg64_step, xsh_rr_u64_to_u32, PCG_MUL_64};
 ///
 /// [wp]: https://en.wikipedia.org/wiki/Permuted_congruential_generator
 ///
-/// * Period: `2**64` when `inc` is odd, otherwise `2**62`
+/// * Period: `2**64` when `inc` is odd, otherwise less
 #[derive(Debug, Clone)]
 pub struct PCG32 {
   /// The generator's state.
@@ -18,11 +18,6 @@ pub struct PCG32 {
   /// This doesn't change as the generator advances. Instead it determines which
   /// of the possible output streams the generator will use. Each `inc` value
   /// will give a different ordering of all the possible outputs.
-  ///
-  /// * When the `inc` value is **odd** then each stream is `2**64` elements
-  /// long.
-  /// * If the `inc` value is **even** the output stream is only `2**62`
-  /// elements long.
   pub inc: u64,
 }
 impl PCG32 {
