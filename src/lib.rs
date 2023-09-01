@@ -1,4 +1,5 @@
 #![no_std]
+#![forbid(unsafe_code)]
 #![warn(missing_docs)]
 #![warn(missing_debug_implementations)]
 #![warn(clippy::missing_const_for_fn)]
@@ -15,9 +16,7 @@
 //!   * If you enable this crate's `getrandom` cargo feature then both types
 //!     will have constructor functions to handle seeding a generator from the
 //!     [getrandom](getrandom::getrandom) function.
-//! * Call `next_u32` on the generator to get pseudo-random `u32` values. Should
-//!   it matter, with these two generator types the higher bits of the output
-//!   will have *slightly* better randomness quality than the lower bits.
+//! * Call `next_u32` on the generator to get pseudo-random `u32` values.
 //! * At your option, import the [Gen32] trait for various extension methods.
 
 pub mod formulas;
