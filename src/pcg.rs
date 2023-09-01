@@ -65,7 +65,7 @@ impl PCG32 {
   }
 }
 
-/// A [Permuted congruential generator][wp] with 32-bit output, extended to `K`
+/// A [Permuted Congruential Generator][wp] with 32-bit output, extended to `K`
 /// dimensions.
 ///
 /// [wp]: https://en.wikipedia.org/wiki/Permuted_congruential_generator
