@@ -157,7 +157,7 @@
     (<span class="self">self</span>.next_u32() <span class="kw">as </span>i32) &lt; <span class="number">0
   </span>}
 
-  <span class="doccomment">/// Gives a value in `0.0 ..= 1.0`.
+  <span class="doccomment">/// Gives a value in the range `0.0 ..= 1.0`
   </span><span class="attr">#[inline]
   </span><span class="kw">fn </span>next_f32_unit(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; f32 {
     ieee754_random_f32(|| <span class="self">self</span>.next_u32(), <span class="bool-val">false</span>)
