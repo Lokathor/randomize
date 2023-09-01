@@ -193,3 +193,17 @@ impl<const K: usize> PCG32K<K> {
     }
   }
 }
+
+#[test]
+fn test_ext_add() {
+  let mut x = PCG32K::<2> { state: 0, ext: [u32::MAX, 0] };
+  x.ext_add(1);
+  assert_eq!(x.ext[0], 0);
+  assert_eq!(x.ext[1], 1);
+  //
+  let mut x = PCG32K::<3> { state: 0, ext: [u32::MAX, u32::MAX, 0] };
+  x.ext_add(1);
+  assert_eq!(x.ext[0], 0);
+  assert_eq!(x.ext[1], 0);
+  assert_eq!(x.ext[2], 1);
+}
