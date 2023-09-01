@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["bytemuck","cfg_if","getrandom","libc","randomize"];
+window.ALL_CRATES = ["bytemuck","randomize"];
