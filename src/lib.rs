@@ -1,10 +1,11 @@
 #![no_std]
-#![forbid(unsafe_code)]
+#![allow(unused_mut)]
 #![warn(missing_docs)]
+#![forbid(unsafe_code)]
 #![warn(missing_debug_implementations)]
 #![warn(clippy::missing_const_for_fn)]
 #![warn(clippy::missing_inline_in_public_items)]
-#![cfg_attr(docs_rs, feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 //! Pseudo-random number generator crate.
 //!
