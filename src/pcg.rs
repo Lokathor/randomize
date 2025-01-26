@@ -1,4 +1,4 @@
-use crate::formulas::{lcg64_jump, lcg64_step, xsh_rr_u64_to_u32, PCG_MUL_64};
+use crate::formulas::{lcg32_step, lcg64_jump, lcg64_step, xsh_rr_u64_to_u32, PCG_MUL_64};
 
 /// A [Permuted Congruential Generator][wp] with 32-bit output.
 ///
@@ -22,9 +22,23 @@ pub struct PCG32 {
 }
 impl PCG32 {
   /// Creates a new generator by directly using the value given.
+  ///
+  /// When a raw `state` value is selected manually, the initial output of the
+  /// generator will frequently be 0. If the initial `state` is not from a
+  /// randomization source then you should probably call [seed](Self::seed)
+  /// instead.
   #[inline]
   #[must_use]
   pub const fn new(state: u64, inc: u64) -> Self {
+    Self { state, inc }
+  }
+
+  /// Seed a new generator.
+  #[inline]
+  pub const fn seed(seed: u64, inc: u64) -> Self {
+    let seed = (seed << 1) | 1;
+    let inc = (inc << 1) | 1;
+    let state = lcg64_step(PCG_MUL_64, inc, seed);
     Self { state, inc }
   }
 
@@ -33,7 +47,7 @@ impl PCG32 {
   ///
   /// This method ensures that the `inc` of the new generator is odd.
   #[cfg(feature = "getrandom")]
-  #[cfg_attr(docs_rs, doc(cfg(feature = "getrandom")))]
+  #[cfg_attr(docsrs, doc(cfg(feature = "getrandom")))]
   #[inline]
   pub fn from_getrandom() -> Result<Self, getrandom::Error> {
     use bytemuck::bytes_of_mut;
@@ -102,9 +116,27 @@ pub struct PCG32K<const K: usize> {
 }
 impl<const K: usize> PCG32K<K> {
   /// Creates a new generator by directly using the value given.
+  ///
+  /// When a raw `state` value is selected manually, the initial output of the
+  /// generator will frequently be 0. If the initial `state` is not from a
+  /// randomization source then you should probably call [seed](Self::seed)
+  /// instead.
   #[inline]
   #[must_use]
   pub const fn new(state: u64, ext: [u32; K]) -> Self {
+    Self { state, ext }
+  }
+
+  /// Seed a new generator.
+  #[inline]
+  pub const fn seed(seed: u64, mut ext: [u32; K]) -> Self {
+    let seed = (seed << 1) | 1;
+    let state = lcg64_step(PCG_MUL_64, 1, seed);
+    let mut i = 0;
+    while i < K {
+      ext[i] = lcg32_step(PCG_MUL_64 as u32, 1, ext[i]);
+      i += 1;
+    }
     Self { state, ext }
   }
 
@@ -115,7 +147,7 @@ impl<const K: usize> PCG32K<K> {
   /// * If the [getrandom](getrandom::getrandom) call fails the error bubbles
   ///   up.
   #[cfg(feature = "getrandom")]
-  #[cfg_attr(docs_rs, doc(cfg(feature = "getrandom")))]
+  #[cfg_attr(docsrs, doc(cfg(feature = "getrandom")))]
   #[inline]
   pub fn from_getrandom() -> Result<Self, getrandom::Error> {
     use bytemuck::bytes_of_mut;
@@ -138,7 +170,7 @@ impl<const K: usize> PCG32K<K> {
   /// * If the [getrandom](getrandom::getrandom) call fails the error bubbles
   ///   up.
   #[cfg(feature = "getrandom")]
-  #[cfg_attr(docs_rs, doc(cfg(feature = "getrandom")))]
+  #[cfg_attr(docsrs, doc(cfg(feature = "getrandom")))]
   #[inline]
   pub fn scramble_ext_array(&mut self) -> Result<(), getrandom::Error> {
     use bytemuck::bytes_of_mut;
