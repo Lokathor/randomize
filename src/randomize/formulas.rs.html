@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/formulas.rs`."><title>formulas.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="randomize" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (2f5df8a94 2023-08-31)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../randomize/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/formulas.rs`."><title>formulas.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-faa87aeb.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="randomize" data-themes="" data-resource-suffix="" data-rustdoc-version="1.86.0-nightly (f7cc13af8 2025-01-25)" data-channel="nightly" data-search-js="search-ccb196c1.js" data-settings-js="settings-0f613d39.js" ><script src="../../static.files/storage-59e33391.js"></script><script defer src="../../static.files/src-script-56102188.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">randomize/</div>formulas.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -233,13 +234,12 @@
 <a href="#233" id="233">233</a>
 <a href="#234" id="234">234</a>
 <a href="#235" id="235">235</a>
-<a href="#236" id="236">236</a>
-</pre></div><pre class="rust"><code><span class="doccomment">//! Base formulas used elsewhere in the crate.
+<a href="#236" id="236">236</a></pre></div><pre class="rust"><code><span class="doccomment">//! Base formulas used elsewhere in the crate.
 
 /// This is the suggested multiplier for a PCG with 64 bits of state.
 </span><span class="kw">pub const </span>PCG_MUL_64: u64 = <span class="number">6364136223846793005</span>;
 
-<span class="doccomment">/// Advance a 32-bit LCG&#39;s state.
+<span class="doccomment">/// Advance a 32-bit LCG's state.
 </span><span class="attr">#[inline]
 #[must_use]
 </span><span class="kw">pub const fn </span>lcg32_step(mul: u32, add: u32, state: u32) -&gt; u32 {
@@ -266,7 +266,7 @@
   state.wrapping_mul(acc_mult).wrapping_add(acc_plus)
 }
 
-<span class="doccomment">/// Advance a 32-bit LCG&#39;s state.
+<span class="doccomment">/// Advance a 32-bit LCG's state.
 </span><span class="attr">#[inline]
 #[must_use]
 </span><span class="kw">pub const fn </span>lcg64_step(mul: u64, add: u64, state: u64) -&gt; u64 {
@@ -293,7 +293,7 @@
   state.wrapping_mul(acc_mult).wrapping_add(acc_plus)
 }
 
-<span class="doccomment">/// Advance a 32-bit LCG&#39;s state.
+<span class="doccomment">/// Advance a 32-bit LCG's state.
 </span><span class="attr">#[inline]
 #[must_use]
 </span><span class="kw">pub const fn </span>lcg128_step(mul: u128, add: u128, state: u128) -&gt; u128 {
@@ -320,21 +320,21 @@
   state.wrapping_mul(acc_mult).wrapping_add(acc_plus)
 }
 
-<span class="doccomment">/// &quot;Xor-shift high bits&quot; then &quot;randomized rotate&quot;, `u64` down to `u32`.
+<span class="doccomment">/// "Xor-shift high bits" then "randomized rotate", `u64` down to `u32`.
 </span><span class="attr">#[inline]
 #[must_use]
 </span><span class="kw">pub const fn </span>xsh_rr_u64_to_u32(state: u64) -&gt; u32 {
   <span class="comment">// Note(Lokathor): Bit randomness quality is better in the higher bits. The
   // top 5 bits specify the random rotation, while the next 32 bits are the
-  // &quot;source&quot; of the final value. The xor-shift amount is half the total bits in
-  // play, so it&#39;s (32+5)/2==18.
+  // "source" of the final value. The xor-shift amount is half the total bits in
+  // play, so it's (32+5)/2==18.
   </span><span class="kw">let </span>rot_amount: u32 = (state &gt;&gt; (<span class="number">64 </span>- <span class="number">5</span>)) <span class="kw">as </span>u32;
   <span class="kw">let </span>xor_shifted: u64 = state ^ (state &gt;&gt; ((<span class="number">32 </span>+ <span class="number">5</span>) / <span class="number">2</span>));
   <span class="kw">let </span>kept_bits: u32 = (xor_shifted &gt;&gt; (<span class="number">32 </span>- <span class="number">5</span>)) <span class="kw">as </span>u32;
   kept_bits.rotate_right(rot_amount)
 }
 
-<span class="doccomment">/// &quot;Xor-shift low bits&quot; then &quot;randomized rotate&quot;, `u128` to `u64`.
+<span class="doccomment">/// "Xor-shift low bits" then "randomized rotate", `u128` to `u64`.
 </span><span class="attr">#[inline]
 #[must_use]
 </span><span class="kw">pub const fn </span>xsl_rr_u128_to_u64(state: u128) -&gt; u64 {
@@ -348,8 +348,8 @@
   folded_bits.rotate_right(rot_amount)
 }
 
-<span class="doccomment">/// Returns `k` with probability `2^(-k-1)`, a &quot;binary exponential
-/// distribution&quot;.
+<span class="doccomment">/// Returns `k` with probability `2^(-k-1)`, a "binary exponential
+/// distribution".
 </span><span class="attr">#[inline]
 #[must_use]
 </span><span class="kw">pub fn </span>next_binary_exp_distr32&lt;F: FnMut() -&gt; u32&gt;(<span class="kw-2">mut </span>f: F) -&gt; u32 {
@@ -357,7 +357,7 @@
 
   // Note(Lokathor): We want to calculate the number of trailing zeroes on a
   // result `r` from the generator. However, as long as `r` is 0 we act like
-  // it&#39;s just an &quot;extra&quot; 32 trailing zeros and then generate again.
+  // it's just an "extra" 32 trailing zeros and then generate again.
   </span><span class="kw">let </span><span class="kw-2">mut </span>extra = <span class="number">0</span>;
   <span class="kw">let </span><span class="kw-2">mut </span>r: u32 = f();
   <span class="kw">while </span>r == <span class="number">0 </span>{
