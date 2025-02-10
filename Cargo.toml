@@ -7,7 +7,7 @@ edition = "2021"
 license = "Zlib OR Apache-2.0 OR MIT"
 
 [features]
-#default = ["getrandom"]
+default = ["getrandom"]
 
 [dependencies]
 bytemuck = { version = "1.13.1", features = ["min_const_generics"] }
